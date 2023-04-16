@@ -51,7 +51,9 @@ class _TodaysTaskscreenState extends State<TodaysTaskscreen> {
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
                   children: [
-                    Text('today $index'),
+                    Text('today $index',style: TextStyle(
+                      decoration: taskCompleted[index] == true ? TextDecoration.lineThrough :null,
+                    ),),
                     const Spacer(),
                     Transform.scale(
                       scale: 1.5,
