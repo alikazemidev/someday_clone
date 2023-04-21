@@ -56,10 +56,11 @@ class _HomePageState extends State<HomePage> {
           GestureDetector(
             onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TodaysTaskscreen(),
-                  ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const TodaysTaskscreen(),
+                ),
+              );
             },
             child: Container(
               margin: const EdgeInsets.all(15),
