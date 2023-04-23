@@ -1,6 +1,6 @@
 class Task {
-  final String? title;
-  final bool? isCompleted;
+   String? title;
+   bool? isCompleted;
 
   Task(this.title, this.isCompleted);
 

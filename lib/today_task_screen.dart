@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:someday_clone/model/task.dart';
 
 class TodaysTaskscreen extends StatefulWidget {
   const TodaysTaskscreen({super.key});
@@ -11,11 +12,61 @@ class TodaysTaskscreen extends StatefulWidget {
 class _TodaysTaskscreenState extends State<TodaysTaskscreen> {
   int selectedIndex = 0;
   List<bool> taskCompleted = List.generate(5, (_) => false);
+  List<Task> tasks = [
+    Task('task 1', true),
+    Task('task 2', true),
+    Task('task 3', false),
+    Task('task 4', true),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2 + 100,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    children: [
+                      const TextField(
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'add your task...',
+                          hintStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 50),
+                        ),
+                        onPressed: () {},
+                        child: const Text('Add'),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
         backgroundColor: Colors.amber.shade600,
         child: const Icon(
           CupertinoIcons.pencil,
@@ -35,8 +86,7 @@ class _TodaysTaskscreenState extends State<TodaysTaskscreen> {
         ),
       ),
       body: ListView.builder(
-        key: UniqueKey(),
-        itemCount: 5,
+        itemCount: tasks.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {},
@@ -51,9 +101,14 @@ class _TodaysTaskscreenState extends State<TodaysTaskscreen> {
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
                   children: [
-                    Text('today $index',style: TextStyle(
-                      decoration: taskCompleted[index] == true ? TextDecoration.lineThrough :null,
-                    ),),
+                    Text(
+                      tasks[index].title!,
+                      style: TextStyle(
+                        decoration: taskCompleted[index] == true
+                            ? TextDecoration.lineThrough
+                            : null,
+                      ),
+                    ),
                     const Spacer(),
                     Transform.scale(
                       scale: 1.5,
@@ -65,10 +120,10 @@ class _TodaysTaskscreenState extends State<TodaysTaskscreen> {
                           fillColor: MaterialStateProperty.all(Colors.green),
                           onChanged: (value) {
                             setState(() {
-                              taskCompleted[index] = value!;
+                              tasks[index].isCompleted = value!;
                             });
                           },
-                          value: taskCompleted[index],
+                          value: tasks[index].isCompleted,
                         ),
                       ),
                     ),
